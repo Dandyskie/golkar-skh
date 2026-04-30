@@ -1,54 +1,78 @@
+/**
+ * Komponen Preloader (Animasi Loading Awal)
+ * -------------------------------------------------------------------------
+ * Komponen ini muncul menutupi seluruh layar saat website pertama kali dimuat.
+ * Tujuannya untuk memberikan kesan premium dan menunggu halaman siap.
+ * 
+ * Konsep React:
+ * 1. useState: Mengatur status 'loading' (apakah masih loading?) dan 'fadeOut' (mulai menghilang).
+ * 2. useEffect & setTimeout: Mengatur waktu otomatis (timer) kapan preloader harus mulai menghilang (2 detik).
+ * 3. Conditional Rendering: Jika loading sudah false, preloader tidak di-render sama sekali (return null).
+ */
+
 import { useEffect, useState } from 'react';
 
 export default function Preloader() {
+  // State untuk menentukan apakah komponen ini harus di-render atau dihapus
   const [loading, setLoading] = useState(true);
+  
+  // State untuk memicu animasi transisi (opacity-0) sebelum komponen benar-benar dihapus
   const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Memulai proses fade out setelah 2 detik
+    // Timer 1: Memulai proses animasi fade out (menghilang) setelah 2 detik
     const timer = setTimeout(() => {
       setFadeOut(true);
     }, 2000);
 
-    // Menghapus komponen sepenuhnya setelah animasi fade out selesai
+    // Timer 2: Menghapus komponen sepenuhnya (unmount) setelah animasi fade out selesai
+    // 2800ms didapat dari 2000ms delay awal + 800ms durasi CSS transisi
     const removeTimer = setTimeout(() => {
       setLoading(false);
-    }, 2800); // 2000ms + 800ms durasi transisi
+    }, 2800);
 
+    // Cleanup function: Mencegah memory leak jika komponen dihapus sebelum timer selesai
     return () => {
       clearTimeout(timer);
       clearTimeout(removeTimer);
     };
-  }, []);
+  }, []); // Array kosong [] berarti efek ini hanya dijalankan sekali saat komponen dimuat
 
+  // Jika state loading bernilai false, komponen ini akan hilang sepenuhnya dari struktur HTML
   if (!loading) return null;
 
   return (
     <div
+      // Class dinamis: Jika fadeOut true, maka opacity menjadi 0 (transparan)
+      // z-[100] memastikan preloader selalu berada di lapisan paling atas menutupi segalanya
       className={`fixed inset-0 z-[100] flex items-center justify-center transition-opacity duration-800 ${
         fadeOut ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
     >
-      {/* Background gradient elegan */}
+      {/* Background utama gradient elegan warna kuning Golkar */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#FFD700] via-[#E6C200] to-[#DAA520]" />
 
-      {/* Efek gelombang/cahaya halus di background */}
+      {/* Efek visual gelombang/cahaya berputar di latar belakang */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+        {/* Menggunakan tailwind animate-spin untuk memutar elemen secara terus-menerus */}
         <div className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.4)_0%,transparent_50%)] animate-[spin_15s_linear_infinite]" />
       </div>
 
-      {/* Konten Utama */}
+      {/* Kontainer Utama (Berada di atas background karena z-10) */}
       <div className="relative z-10 flex flex-col items-center">
-        {/* Logo */}
+        
+        {/* Bagian Logo: Tampil dengan efek membesar (scaleIn) */}
         <div className="w-24 h-24 sm:w-32 sm:h-32 mb-6 rounded-full overflow-hidden bg-white shadow-2xl flex items-center justify-center border-4 border-white animate-[scaleIn_0.8s_ease-out_forwards]">
+          {/* Path gambar telah diperbaiki ke /img/ (karena folder public di Vite akan langsung dikenali dari root /) */}
           <img
-            src="/public/img/golkarlogokntl.png"
+            src="/img/golkarlogokntl.png"
             alt="Logo Partai Golkar"
+            // Efek detak jantung (pulse) yang berulang terus (infinite)
             className="w-20 h-20 sm:w-28 sm:h-28 object-contain animate-[pulse_2s_infinite]"
           />
         </div>
 
-        {/* Teks */}
+        {/* Bagian Teks: Muncul berurutan (slideUp dengan delay berbeda-beda) */}
         <div className="text-center overflow-hidden">
           <p className="font-[Montserrat] font-bold text-lg sm:text-xl text-[#001233] tracking-[0.3em] uppercase opacity-0 translate-y-4 animate-[slideUp_0.8s_ease-out_0.3s_forwards]">
             Dewan Pimpinan Daerah
@@ -62,7 +86,10 @@ export default function Preloader() {
         </div>
       </div>
 
-      {/* Custom Keyframes untuk Tailwind JIT */}
+      {/* 
+        Injeksi gaya CSS animasi secara lokal menggunakan tag <style> 
+        Ini berguna karena animasi kompleks lebih mudah ditulis dalam bentuk keyframes CSS biasa.
+      */}
       <style>{`
         @keyframes scaleIn {
           0% { transform: scale(0.5); opacity: 0; }
