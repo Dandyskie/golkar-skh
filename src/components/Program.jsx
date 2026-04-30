@@ -19,7 +19,7 @@ export default function Program() {
           <span className="section-label">Program Unggulan</span>
           <h2 className="section-title text-3xl md:text-5xl text-white mt-3">Program Aksi Nyata</h2>
           <div className="gold-line mx-auto mt-5" />
-          <p className="text-white/70 mt-5 max-w-xl mx-auto text-sm">Enam program strategis untuk membangun Yogyakarta yang maju, berkeadilan, dan berkelanjutan.</p>
+          <p className="text-white/70 mt-5 max-w-xl mx-auto text-sm">Enam program strategis untuk membangun Sukoharjo yang maju, berkeadilan, dan berkelanjutan.</p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

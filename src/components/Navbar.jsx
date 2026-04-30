@@ -43,16 +43,16 @@ export default function Navbar() {
       scrolled ? 'bg-white shadow-lg shadow-black/10' : 'bg-white/90 backdrop-blur-md'
     } ${hidden ? '-translate-y-full' : 'translate-y-0'}`}>
       <div className="max-w-[1400px] mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-12 md:h-20">
           {/* Logo */}
-<a href="#beranda" onClick={(e) => handleClick(e, '#beranda')} className="flex items-center gap-3">
-  <div className="w-12 h-12 rounded-full overflow-hidden shadow-lg border-2 border-golkar-yellow/40 bg-white flex items-center justify-center">
-    <img 
-      src="/public/img/golkarlogokntl.png" 
-      alt="Logo Golkar" 
-      className="w-10 h-10 object-contain"
-    />
-  </div>
+          <a href="#beranda" onClick={(e) => handleClick(e, '#beranda')} className="flex items-center gap-3">
+            <div className="w-8 h-8 md:w-12 md:h-12 rounded-full overflow-hidden shadow-sm border-2 border-golkar-yellow/40 bg-white flex items-center justify-center">
+              <img 
+                src="/public/img/golkarlogokntl.png" 
+                alt="Logo Golkar" 
+                className="w-5 h-5 md:w-10 md:h-10 object-contain"
+              />
+            </div>
             <div className="hidden sm:block leading-tight">
               <p className="text-[10px] font-semibold tracking-[0.15em] uppercase text-gray-400">Dewan Pimpinan Daerah</p>
               <p className="text-sm font-bold tracking-wide uppercase text-golkar-dark-gold">Partai Golkar</p>
