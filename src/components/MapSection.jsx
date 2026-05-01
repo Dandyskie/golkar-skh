@@ -1,24 +1,39 @@
 /**
  * Komponen MapSection (Peta Perjuangan)
  * -------------------------------------------------------------------------
- * Menampilkan peta sebaran wilayah dan statistik kader menggunakan elemen SVG.
+ * Menampilkan peta sebaran wilayah dan statistik kader menggunakan elemen Leaflet (Peta Asli).
  * 
  * Konsep Pembelajaran:
- * 1. SVG Dasar: Menggunakan `<svg>`, `<path>`, dan `<circle>` untuk menggambar peta.
+ * 1. React Leaflet: Menggunakan library `react-leaflet` untuk menampilkan peta interaktif
+ *    (bisa di-zoom, digeser) lengkap dengan penanda (marker) dan popup informasi.
  * 2. Progress Bar: Membuat bar persentase (progress) yang panjangnya berubah dinamis menggunakan inline style.
- * 3. Math Computation: Mengubah string berformat koma ("2,340") menjadi integer dengan `parseInt()` 
- *    dan `.replace()` agar bisa dihitung persentasenya.
  */
 
 import { MapPin } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
-// Data statistik per wilayah (nama kecamatan dan jumlah kader)
+// Import aset gambar default leaflet karena sering bermasalah saat proses build di React/Vite
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+// Memperbaiki masalah path icon bawaan Leaflet
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: markerIcon2x,
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
+
+// Data statistik per wilayah lengkap dengan koordinat Latitude & Longitude asli
 const regions = [
-  { name: 'Kecamatan Sukoharjo', kader: '2,340' },
-  { name: 'Kecamatan Tawangsari', kader: '3,120' },
-  { name: 'Kecamatan Polokarto', kader: '2,890' },
-  { name: 'Kecamatan Gatak', kader: '2,100' },
-  { name: 'Kecamatan Bendosari', kader: '2,000' },
+  { name: 'Kecamatan Sukoharjo', kader: '2,340', lat: -7.6787, lng: 110.8358 },
+  { name: 'Kecamatan Tawangsari', kader: '3,120', lat: -7.7333, lng: 110.8333 },
+  { name: 'Kecamatan Polokarto', kader: '2,890', lat: -7.6500, lng: 110.8833 },
+  { name: 'Kecamatan Gatak', kader: '2,100', lat: -7.5833, lng: 110.7667 },
+  { name: 'Kecamatan Bendosari', kader: '2,000', lat: -7.6667, lng: 110.8500 },
 ];
 
 export default function MapSection() {
@@ -33,35 +48,36 @@ export default function MapSection() {
           <div className="gold-line mx-auto mt-5" />
         </div>
 
-        {/* 2 Kolom Layout (Kiri = Peta SVG, Kanan = Daftar Wilayah) */}
+        {/* 2 Kolom Layout (Kiri = Peta Leaflet, Kanan = Daftar Wilayah) */}
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           
-          {/* KOLOM KIRI: Visualisasi Peta (Memakai SVG murni) */}
-          <div className="fade-left relative">
-            {/* aspect-square memaksa kotak pembungkus berbentuk persegi 1:1 */}
-            <div className="aspect-square max-w-lg mx-auto relative">
-              <svg viewBox="0 0 400 400" className="w-full h-full">
-                {/* 
-                  Setiap elemen <path> mewakili poligon bebas untuk bentuk kecamatan.
-                  Elemen <circle> digunakan untuk bentuk lingkaran sederhana.
-                  Properti d="..." berisi koordinat menggambar garis dan bentuk.
-                */}
-                <path d="M80 80 L320 80 L300 180 L100 180 Z" fill="rgba(255,255,255,0.3)" stroke="#fff" strokeWidth="1.5" className="hover:fill-white/50 transition-all cursor-pointer" />
-                <text x="200" y="135" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="600">Sukoharjo</text>
-                
-                <circle cx="200" cy="210" r="30" fill="rgba(255,255,255,0.25)" stroke="#fff" strokeWidth="2" className="hover:fill-white/50 transition-all cursor-pointer" />
-                <text x="200" y="214" textAnchor="middle" fill="#fff" fontSize="8" fontWeight="600">Tawangsari</text>
-                
-                <path d="M100 240 L300 240 L280 340 L120 340 Z" fill="rgba(255,255,255,0.3)" stroke="#fff" strokeWidth="1.5" className="hover:fill-white/50 transition-all cursor-pointer" />
-                <text x="200" y="295" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="600">Polokarto</text>
-                
-                <path d="M20 180 L95 180 L95 340 L20 280 Z" fill="rgba(255,255,255,0.3)" stroke="#fff" strokeWidth="1.5" className="hover:fill-white/50 transition-all cursor-pointer" />
-                <text x="58" y="260" textAnchor="middle" fill="#fff" fontSize="9" fontWeight="600">Gatak</text>
-                
-                <path d="M305 180 L380 180 L380 300 L285 340 L305 240 Z" fill="rgba(255,255,255,0.3)" stroke="#fff" strokeWidth="1.5" className="hover:fill-white/50 transition-all cursor-pointer" />
-                <text x="340" y="260" textAnchor="middle" fill="#fff" fontSize="9" fontWeight="600">Bendosari</text>
-              </svg>
-            </div>
+          {/* KOLOM KIRI: Visualisasi Peta (Leaflet JS) */}
+          <div className="fade-left relative w-full h-[350px] sm:h-[450px] rounded-2xl overflow-hidden shadow-xl border-4 border-white/20">
+            <MapContainer 
+              center={[-7.6787, 110.8358]} // Titik tengah peta (diambil dari pusat Sukoharjo)
+              zoom={11} // Seberapa dekat peta saat pertama dimuat
+              scrollWheelZoom={false} // Mencegah peta ter-zoom tidak sengaja saat user scroll halaman ke bawah
+              className="w-full h-full z-0"
+            >
+              {/* Layer Gambar Peta (Bersumber dari OpenStreetMap) */}
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              
+              {/* Mapping marker untuk setiap wilayah di array regions */}
+              {regions.map((region, i) => (
+                <Marker key={i} position={[region.lat, region.lng]}>
+                  {/* Popup yang muncul saat marker diklik */}
+                  <Popup>
+                    <div className="text-center">
+                      <strong className="text-golkar-dark-gold text-sm block mb-1">{region.name}</strong>
+                      <span className="text-gray-600 text-xs">{region.kader} Kader Aktif</span>
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+            </MapContainer>
           </div>
 
           {/* KOLOM KANAN: Daftar Nama Wilayah & Bar Persentase */}

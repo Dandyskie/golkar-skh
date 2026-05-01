@@ -69,7 +69,7 @@ export default function About() {
                 src="/img/bahlianjg-removebg-preview.png" 
                 alt="Tokoh Golkar" 
                 // w-[80%] di mobile agar tidak kebesaran, w-[130%] di desktop agar membesar keluar dari batas container
-                className="relative z-10 w-[80%] lg:w-[130%] max-w-none h-auto object-contain object-bottom drop-shadow-[0_20px_30px_rgba(0,0,0,0.4)] scale-100 lg:scale-110 origin-bottom lg:-translate-x-8"
+                className="relative z-10 w-[80%] lg:w-[130%] max-w-none h-auto object-contain object-bottom-[0_20px_30px_rgba(0,0,0,0.4)] scale-100 lg:scale-110 origin-bottom lg:-translate-x-8"
                 // Teknik Masking: Menghapus batas bawah gambar secara halus (fade-out) menggunakan gradient transparan ke hitam
                 style={{ maskImage: 'linear-gradient(to top, transparent 0%, black 15%)', WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%)' }}
               />

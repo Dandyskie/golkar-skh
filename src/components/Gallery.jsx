@@ -20,7 +20,7 @@ const galleryItems = [
   { src: 'https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&h=400&fit=crop', title: 'Pelatihan Kader Muda', type: 'image' },
   { src: 'https://images.unsplash.com/photo-1559223607-a43c990c692c?w=600&h=400&fit=crop', title: 'Bakti Sosial Merapi', type: 'video' },
   { src: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&h=400&fit=crop', title: 'Deklarasi Kemenangan', type: 'image' },
-  { src: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&h=400&fit=crop', title: 'Rapat Pimpinan Daerah', type: 'image' },
+  { src: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=400&fit=crop', title: 'Rapat Pimpinan Daerah', type: 'image' },
   { src: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&h=400&fit=crop', title: 'Konsolidasi Partai', type: 'video' },
 ];
 

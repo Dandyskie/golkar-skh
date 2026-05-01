@@ -39,25 +39,25 @@ export default function Hero() {
       {/* Tokoh 1 (Paling Kiri) */}
       <div className="absolute bottom-0 left-[-10%] sm:left-[-5%] lg:left-[-80px] z-10 animate-hero-img-1">
         {/* Catatan: Path gambar diubah dari /public/img/... menjadi /img/... karena root dari static assets Vite adalah folder public */}
-        <img src="/img/bahlil-removebg-preview.png" alt="Tokoh 1" className="h-[28vh] sm:h-[45vh] lg:h-[72vh] object-cover object-top person-shadow"
+        <img src="/img/bahlil-removebg-preview.png" alt="Tokoh 1" className="h-[28vh] sm:h-[45vh] lg:h-[72vh] object-cover object-top"
           style={{ maskImage: 'linear-gradient(to top, transparent 0%, black 15%)', WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%)' }} />
       </div>
 
       {/* Tokoh 2 (Kiri Tengah) */}
       <div className="absolute bottom-0 left-[12%] sm:left-[14%] lg:left-[8%] z-[11] animate-hero-img-2">
-        <img src="/img/Prabowo-removebg-preview.png" alt="Tokoh 2" className="h-[25vh] sm:h-[40vh] lg:h-[65vh] object-cover object-top person-shadow"
+        <img src="/img/Prabowo-removebg-preview.png" alt="Tokoh 2" className="h-[25vh] sm:h-[40vh] lg:h-[65vh] object-cover object-top"
           style={{ maskImage: 'linear-gradient(to top, transparent 0%, black 15%)', WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%)' }} />
       </div>
 
       {/* Tokoh 3 (Kanan Tengah) */}
       <div className="absolute bottom-0 right-[15%] sm:right-[18%] lg:right-[13%] z-[11] animate-hero-img-3">
-        <img src="/img/Jaka-removebg-preview.png" alt="Tokoh 3" className="h-[25vh] sm:h-[40vh] lg:h-[66vh] object-cover object-top person-shadow"
+        <img src="/img/Jaka-removebg-preview.png" alt="Tokoh 3" className="h-[25vh] sm:h-[40vh] lg:h-[66vh] object-cover object-top"
           style={{ maskImage: 'linear-gradient(to top, transparent 0%, black 15%)', WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%)' }} />
       </div>
 
       {/* Tokoh 4 (Paling Kanan) */}
-      <div className="absolute bottom-0 right-[-5%] sm:right-[1%] lg:right-[-1%] z-[11] animate-hero-img-4">
-        <img src="/img/saleh-removebg-preview.png" alt="Tokoh 4" className="h-[26vh] sm:h-[42vh] lg:h-[66vh] object-cover object-top person-shadow"
+      <div className="absolute bottom-0 right-[-5%] sm:right-[1%] lg:right-[-1%] z-10 animate-hero-img-4">
+        <img src="/img/saleh-removebg-preview.png" alt="Tokoh 4" className="h-[26vh] sm:h-[42vh] lg:h-[66vh] object-cover object-top"
           style={{ maskImage: 'linear-gradient(to top, transparent 0%, black 15%)', WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 15%)' }} />
       </div>
 

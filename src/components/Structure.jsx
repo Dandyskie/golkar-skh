@@ -12,9 +12,9 @@
 
 // Data pengurus (Bisa diganti dengan data dari API/Database nantinya)
 const leaders = [
-  { name: 'Dr. H. Ahmad Suryanto, M.Si', role: 'Ketua DPD', img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop&crop=top' },
-  { name: 'Hj. Siti Nurjanah, S.H.', role: 'Wakil Ketua', img: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=500&fit=crop&crop=top' },
-  { name: 'Ir. Bambang Wicaksono', role: 'Sekretaris', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop&crop=top' },
+  { name: 'Mohammad Saleh, ST., M.En.', role: 'Ketua DPD', img: 'https://upload.wikimedia.org/wikipedia/commons/0/09/Mohammad-saleh-golkar-jateng.jpg' },
+  { name: 'Bahlil Lahadalia, S.E., M.Si.', role: 'Ketua DPP', img: 'https://upload.wikimedia.org/wikipedia/commons/a/ac/Bahlil_Lahadalia_Official_Portrait.png' },
+  { name: 'Jaka Wuryanta, S.H.', role: 'Ketua DPC', img: 'https://dprd.sukoharjokab.go.id/wp-content/uploads/2024/11/34.-JAKA-WURYANTA-SH-200x300.jpg' },
 ];
 
 export default function Structure() {
